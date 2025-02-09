@@ -28,11 +28,21 @@ run :
 pip install -r requirements.txt
 ```
 
+run : 
+
+```bash
+python app/utils/initDB.py
+```
+
+if you get a module not found "app" on windows, you have to add the folder above app in your environment variables on the windows system : in the menu, search for modify environment variables and modify/create the value PYTHONPATH to the value of your app.
+
 ## Usage
 
 ```bash 
-uvicorn app.main:app
+python -m fastapi dev app/main.py
 ```
+
+You can then go to http://127.0.0.1:8000/docs to see the documentation and available methods of the application created.
 
 ## Contributing
 
