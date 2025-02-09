@@ -17,15 +17,14 @@ class DBManager:
         self.dbType = configManager.getDBType()
         self.dbUrl = configManager.getDBUrl()
         self.engine = self._buildEngine()
+        self.session = self.getSession()
 
     def _buildEngine(
         self,
     ):
         if self.dbType == "sqlite":
             # 'sqlite:///C:\\path\\to\\foo.db'
-            return create_engine(
-                f"sqlite:///{self.dbUrl}", pool_size=self.dbSize, echo=True
-            )
+            return create_engine(f"sqlite:///{self.dbUrl}", echo=True)
         elif self.dbType == "mysql":
             # 'mysql+mysqldb://scott:tiger@localhost:3306/foo'
             return create_engine(f"mysql+mysqldb://{self.dbUrl}", echo=True)
@@ -92,7 +91,7 @@ class DBManager:
         session.close()
         return rows
 
-    def getAllStudents(self, objName) -> Any:
+    def getAllStudents(self) -> Any:
         session = self.getSession()
         all_students = session.query(Student).all()
         session.close()

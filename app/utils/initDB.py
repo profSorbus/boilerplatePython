@@ -27,25 +27,24 @@ def populateStudents(session):
 
 
 def populateTeachers(session):
-    t1 = Student(name="professor Sorbus", subject="computing")
+    t1 = Teacher(name="professor Sorbus", subject="computing")
     session.add(t1)
     session.commit()
     session.close()
 
 
 def main():
-    confFilePath = pathlib.Path.cwd().parent / "conf" / "config.ini"
 
-    configManager = ConfigManager(confFilePath)
+    configManager = ConfigManager()
     dbManager = DBManager(configManager)
     engine = dbManager.getEngine()
 
     dropAllTables(engine)
     createTables(engine)
 
-    populateSection(dbManager)
-    populateStudents(dbManager)
-    populateTeachers(dbManager)
+    populateSection(dbManager.session)
+    populateStudents(dbManager.session)
+    populateTeachers(dbManager.session)
 
 
 if __name__ == "__main__":

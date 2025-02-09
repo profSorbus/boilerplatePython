@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 confFilePath = pathlib.Path.cwd() / "app" / "conf" / "config.ini"
 
-configManager = ConfigManager(confFilePath)
+configManager = ConfigManager()
 
 LogManager(configManager)
 logger.info("Starting app")

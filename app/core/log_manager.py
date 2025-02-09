@@ -11,6 +11,5 @@ class LogManager:
         logging.config.fileConfig(
             configManager.getLogConfPath(),
             disable_existing_loggers=False,
-            defaults={
-                "logfilename": f"{configManager.getLogOutputDir()}/sample_app_{timestamp}.log"},
+            defaults={"logfilename": f"logs/sample_app_{timestamp}.log"},
         )

@@ -8,7 +8,14 @@ from app.utils.tools import listContains
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_LOG_CONF = str(pathlib.Path(__file__).parent.resolve() / "conf" / "config.ini")
+
+DEFAULT_CONF = str(
+    pathlib.Path(__file__).parent.parent.resolve() / "conf" / "config.ini"
+)
+print(DEFAULT_CONF)
+DEFAULT_LOG_CONF = str(
+    pathlib.Path(__file__).parent.parent.resolve() / "conf" / "logging.ini"
+)
 DEFAULT_LOG_PATH = pathlib.Path(__file__).parent.resolve() / "logs"
 DEFAULT_DB_PATH = pathlib.Path(__file__).parent.resolve() / "db"
 DEFAULT_DB_NAME = "database.db"
@@ -24,9 +31,9 @@ DEFAULT_DB_TYPE = "sqlite"
 
 
 class ConfigManager:
-    def __init__(self, confFilePath):
+    def __init__(self):
         self.config = configparser.ConfigParser()
-        self.config.read(confFilePath)
+        self.config.read(DEFAULT_CONF)
         self._valid()
 
     def _valid(self) -> None:
