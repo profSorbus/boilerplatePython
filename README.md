@@ -18,15 +18,8 @@ To install the packages :
 pip install -r requirements.txt
 ```
 
-- In app/db, create an empty file called database.db.
 - In app/conf, copy the config_template.ini and rename it config.ini and fill in the correct configuration.
 - In app/conf, copy the logging_template.ini and rename it logging.ini and leave it this way.
-
-run : 
-
-```bash
-pip install -r requirements.txt
-```
 
 run : 
 
