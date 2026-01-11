@@ -1,7 +1,11 @@
+import pathlib
+from sys import path
+
+path.append(str(pathlib.Path(__file__).resolve().parent.parent.parent))
+
 from app.core.db.db_model import Base, Student, Section, Teacher, TeacherSection
 from app.core.db.db_manager import DBManager
 from app.core.config_manager import ConfigManager
-import pathlib
 
 
 def createTables(engine):

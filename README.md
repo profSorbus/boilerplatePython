@@ -8,31 +8,29 @@ Boilerplate is a standard repository that can be used to start any Python projec
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the requirements.
+Use uv to install the requirements. If you don't know how to use uv or install it, go back to the first part of the lab.
 
-I strongly suggest you create a conda/Pyenv environment first to install those packages, with the name of the application as the name of the environment.
+You will need a uv virtual environment for this code to work.
 
 To install the packages :
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 - In app/conf, copy the config_template.ini and rename it config.ini and fill in the correct configuration.
 - In app/conf, copy the logging_template.ini and rename it logging.ini and leave it this way.
 
-run : 
+run to initialise the database : 
 
 ```bash
-python app/utils/initDB.py
+uv run app/utils/initDB.py
 ```
-
-if you get a module not found "app" on windows, you have to add the folder above app in your environment variables on the windows system : in the menu, search for modify environment variables and modify/create the value PYTHONPATH to the value of your app.
 
 ## Usage
 
 ```bash 
-python -m fastapi dev app/main.py
+uv run fastapi dev
 ```
 
 You can then go to http://127.0.0.1:8000/docs to see the documentation and available methods of the application created.

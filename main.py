@@ -2,6 +2,9 @@ import logging
 import pathlib
 from fastapi import FastAPI
 from pydantic import BaseModel
+from sys import path
+
+path.append(str(pathlib.Path(__file__).resolve()))
 
 from app.core.config_manager import ConfigManager
 from app.core.log_manager import LogManager

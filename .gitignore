@@ -1,4 +1,3 @@
-logging.ini 
 config.ini
 .vscode
 logs/
@@ -175,3 +174,4 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+uv.lock
