@@ -49,11 +49,13 @@ Run this command every time you want to reset the database.
 
 ## Usage
 
-Launch the api :
+### Launch the api
 
 ```bash
 uv run fastapi dev
 ```
+
+### Visit the documentation
 
 You can then go to http://127.0.0.1:8000/docs to see the documentation and available methods of the application created.
 
