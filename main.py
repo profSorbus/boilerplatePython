@@ -49,5 +49,19 @@ async def show_welcome_page():
 
 @app.get("/getAllStudents")
 async def get_all_students():
+    logger.info("All students where accessed")
     all_students = dbManager.getAllStudents()
     return all_students
+
+
+@app.get("/getTeacher")
+async def get_all_teachers(n: int):
+    all_students = dbManager.getAllTeachers()
+    all_students[0:n]
+    return all_students
+
+
+@app.post("/postTeacher")
+async def create_teacher(name: str, subject: str):
+    dbManager.createTeacher(name, subject)
+    return "Ok !"

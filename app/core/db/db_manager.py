@@ -96,3 +96,14 @@ class DBManager:
         all_students = session.query(Student).all()
         session.close()
         return all_students
+
+    def getAllTeachers(self) -> Any:
+        session = self.getSession()
+        all_students = session.query(Teacher).all()
+        session.close()
+        return all_students
+
+    def createTeacher(self, name, subject) -> Any:
+        session = self.getSession()
+        session.add(Teacher(name=name, subject=subject))
+        session.close()
