@@ -5,6 +5,7 @@ import pathlib
 import sys
 
 from app.utils.tools import listContains
+from app.utils.initDB import main
 
 logger = logging.getLogger(__name__)
 
@@ -12,13 +13,15 @@ logger = logging.getLogger(__name__)
 DEFAULT_CONF = str(
     pathlib.Path(__file__).parent.parent.resolve() / "conf" / "config.ini"
 )
-print(DEFAULT_CONF)
 DEFAULT_LOG_CONF = str(
     pathlib.Path(__file__).parent.parent.resolve() / "conf" / "logging.ini"
 )
-DEFAULT_LOG_PATH = pathlib.Path(__file__).parent.resolve() / "logs"
+DEFAULT_LOG_PATH = pathlib.Path(__file__).parent.parent.parent.resolve() / "logs"
 DEFAULT_DB_PATH = pathlib.Path(__file__).parent.resolve() / "db"
 DEFAULT_DB_NAME = "database.db"
+AVA_DB_TYPE = ["sqlite", "mysql", "postgresql"]
+DEFAULT_DB_TYPE = "sqlite"
+
 MANDATORY_SECTIONS = ["APP", "DATABASE"]
 MANDATORY_KEYS = [
     "log_dir",
@@ -26,8 +29,6 @@ MANDATORY_KEYS = [
     "db_type",
     "path",
 ]
-AVA_DB_TYPE = ["sqlite", "mysql", "postgresql"]
-DEFAULT_DB_TYPE = "sqlite"
 
 
 class ConfigManager:
@@ -50,7 +51,7 @@ class ConfigManager:
             logger.error(
                 f"The configuration file is not valid, it misses mandatory sections: {MANDATORY_SECTIONS}"
             )
-            sys.exit(1)
+            # sys.exit(1)
         allKeys = []
         # loop through all mandatory section and get all keys for each section
         for section in MANDATORY_SECTIONS:
@@ -61,7 +62,7 @@ class ConfigManager:
             logger.error(
                 f"The configuration file is not valid, it misses mandatory keys: {MANDATORY_KEYS}"
             )
-            sys.exit(1)
+            # sys.exit(1)
 
     def showAllConfig(self) -> None:
         """
@@ -119,6 +120,12 @@ class ConfigManager:
             # if the database path is empty or not valid, use default value
             if res == "" or not os.path.exists(res):
                 DEFAULT_DB_PATH.mkdir(parents=True, exist_ok=True)
+                if not os.path.exists(f"{str(DEFAULT_DB_PATH)}/{DEFAULT_DB_NAME}"):
+                    logger.info("DB file does not exist, creating it")
+                    open(f"{str(DEFAULT_DB_PATH)}/{DEFAULT_DB_NAME}", "a").close()
+                    logger.info("Initialising database and tables")
+                    main()
+
                 res = f"{str(DEFAULT_DB_PATH)}/{DEFAULT_DB_NAME}"
             return res
 
