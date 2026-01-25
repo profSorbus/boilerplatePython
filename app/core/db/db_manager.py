@@ -25,8 +25,8 @@ class DBManager:
         if self.dbType == "sqlite":
             # 'sqlite:///C:\\path\\to\\foo.db'
             return create_engine(f"sqlite:///{self.dbUrl}", echo=True)
-        elif self.dbType == "mysql":
-            # 'mysql+mysqldb://scott:tiger@localhost:3306/foo'
+        elif self.dbType in ["mysql", "mariadb"]:
+            # 'mysql+mysqldb://user:password@host:port/dbname'
             return create_engine(f"mysql+mysqldb://{self.dbUrl}", echo=True)
         elif self.dbType == "postgresql":
             # 'postgresql+psycopg2://scott:tiger@localhost:5432/foo'

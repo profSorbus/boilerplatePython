@@ -18,8 +18,13 @@ DEFAULT_LOG_CONF = str(
 )
 DEFAULT_LOG_PATH = pathlib.Path(__file__).parent.parent.parent.resolve() / "logs"
 DEFAULT_DB_PATH = pathlib.Path(__file__).parent.resolve() / "db"
-DEFAULT_DB_NAME = "database.db"
-AVA_DB_TYPE = ["sqlite", "mysql", "postgresql"]
+DEFAULT_SQLITE_DB_NAME = "database.db"
+DEFAULT_DB_HOST = "localhost"
+DEFAULT_DB_PORT = "3306"
+DEFAULT_DB_USER = "root"
+DEFAULT_DB_PASSWORD = ""
+DEFAULT_DB_NAME = "app_db"
+AVA_DB_TYPE = ["sqlite", "mysql", "postgresql", "mariadb"]
 DEFAULT_DB_TYPE = "sqlite"
 
 MANDATORY_SECTIONS = ["APP", "DATABASE"]
@@ -131,10 +136,11 @@ class ConfigManager:
 
         # This is what you need to add in the conf if you want to replace sqlite with postgre or mysql ! that's all
         else:
-            return "{}:{}@{}:{}/{}".format(
-                self.config["DATABASE"]["USERNAME"],
-                self.config["DATABASE"]["PASSWORD"],
-                self.config["DATABASE"]["HOST"],
-                self.config["DATABASE"]["PORT"],
-                self.config["DATABASE"]["DB"],
-            )
+            # Handle MySQL/MariaDB configurations
+            host = self.config["DATABASE"].get("HOST", DEFAULT_DB_HOST)
+            port = self.config["DATABASE"].get("PORT", DEFAULT_DB_PORT)
+            user = self.config["DATABASE"].get("USERNAME", DEFAULT_DB_USER)
+            password = self.config["DATABASE"].get("PASSWORD", DEFAULT_DB_PASSWORD)
+            db_name = self.config["DATABASE"].get("DB", DEFAULT_DB_NAME)
+
+            return f"{user}:{password}@{host}:{port}/{db_name}"
