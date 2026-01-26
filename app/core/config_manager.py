@@ -5,7 +5,8 @@ import pathlib
 import sys
 
 from app.utils.tools import listContains
-from app.utils.initDB import main
+
+# from app.utils.initDB import main
 
 logger = logging.getLogger(__name__)
 
@@ -126,10 +127,12 @@ class ConfigManager:
             if res == "" or not os.path.exists(res):
                 DEFAULT_DB_PATH.mkdir(parents=True, exist_ok=True)
                 if not os.path.exists(f"{str(DEFAULT_DB_PATH)}/{DEFAULT_DB_NAME}"):
-                    logger.info("DB file does not exist, creating it")
-                    open(f"{str(DEFAULT_DB_PATH)}/{DEFAULT_DB_NAME}", "a").close()
-                    logger.info("Initialising database and tables")
-                    main()
+                    # logger.info("DB file does not exist, creating it")
+                    # open(f"{str(DEFAULT_DB_PATH)}/{DEFAULT_DB_NAME}", "a").close()
+                    # logger.info("Initialising database and tables")
+                    # main()
+                    print("Database does not exist !")
+                    sys.exit(1)
 
                 res = f"{str(DEFAULT_DB_PATH)}/{DEFAULT_DB_NAME}"
             return res
