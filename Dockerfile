@@ -2,25 +2,28 @@
 FROM python:3.13-slim
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /boilerplate
 
 # Copy the application files into the container
-COPY . /app
+COPY . /boilerplate
 
-# Install uv (package manager) and dependencies
+# Create folders and position files correctly
+RUN mkdir -p /logs
+RUN touch app/core/db/database.db
+RUN cp app/conf/config_docker.ini app/conf/config.ini
+
+# Install uv (package manager) and system dependencies
 RUN pip install --no-cache-dir uv
+RUN apt-get update
+# These system packages are necessary per the mysqlclient python package documentation
+RUN apt-get install default-libmysqlclient-dev build-essential pkg-config -y
 RUN uv sync
 
 # Ensure the database configuration is correct and initialize the database
-RUN cp app/conf/config_template.ini app/conf/config.ini \
-    && sed -i 's|path/to/logs|/app/logs|g' app/conf/config.ini \
-    && sed -i 's|path/to/log/conf|/app/app/conf/logging.ini|g' app/conf/config.ini \
-    && sed -i 's|your/path/to/app/db/database.db|/app/app/db/database.db|g' app/conf/config.ini \
-    && mkdir -p /app/logs \
-    && python app/utils/initDB.py
+RUN uv run app/utils/initDB.py
 
 # Expose the port the app runs on
 EXPOSE 8000
 
 # Command to run the FastAPI application
-CMD ["uv", "run", "fastapi", "dev"]
+CMD ["uv", "run", "fastapi", "run"]
